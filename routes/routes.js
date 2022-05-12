@@ -8,3 +8,11 @@ const router = app =>{
         message:' bienvenido a node.js express rest app!'
     });
 });
+
+  //comit2  //mostrar todos los usurairos
+  app.get('/users',(request, response)=> {
+    pool.query('SELECT * FROM users',(error,result)=>{
+        if(error)throw error;
+        response.send(result);
+    });
+});
