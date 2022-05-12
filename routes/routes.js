@@ -16,3 +16,12 @@ const router = app =>{
         response.send(result);
     });
 });
+//comit 3 mostrar un solo usuarios por id
+app.get('/users/:id', (request, response)=>{
+    const id = request.params.id;
+    pool.query('    SELECT * FROM users WHERE id= ?',id, (error, result)=>{
+        if (error) throw error;
+        response.send(result);
+    })
+}
+);
