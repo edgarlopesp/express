@@ -35,7 +35,7 @@ app.post('/users', (request, response)=>{
 });
 
 //comi5 put
-add.put('/users/:id',(request, response)=>{
+app.put('/users/:id',(request, response)=>{
     const id =request.params.id;
     pool.query('UPDATE users SET ? WHERE id =?', [request.body, id], (error, result)=>{
         if(error) throw error;
@@ -43,4 +43,15 @@ add.put('/users/:id',(request, response)=>{
     });
 });
 
-};
+//comi 6 eliminar usuario
+app.delete('/users/:id',(request,response)=>{
+    const id = request.params.id;
+    pool.query('DELETE FROM users WHERE id = ?', id, (error, result)=>{
+        if(error) throw error;
+        response.send('User delete.');
+    });
+});
+
+
+}
+module.exports=router;
