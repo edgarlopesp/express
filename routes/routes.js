@@ -1,5 +1,6 @@
 //commit 1 cargue la conexion del grupo mysql
 const { response } = require('express');
+const { request } = require('http');
 const pool = require('../data/config');
 const router = app =>{
     app.get('/',(request, response)=>{
@@ -22,6 +23,35 @@ app.get('/users/:id', (request, response)=>{
     pool.query('    SELECT * FROM users WHERE id= ?',id, (error, result)=>{
         if (error) throw error;
         response.send(result);
-    })
+    });
+});
+
+//comit 4 agregar un nuevo usuario
+app.post('/users', (request, response)=>{
+    pool.query('INSERT INTO users SET ?', request.body, (error, result)=>{
+        if(error)throw error;
+        response.status(201).send(`User added with ID: ${result.insertId}`);
+    });
+});
+
+//comi5 put
+app.put('/users/:id',(request, response)=>{
+    const id =request.params.id;
+    pool.query('UPDATE users SET ? WHERE id =?', [request.body, id], (error, result)=>{
+        if(error) throw error;
+        response.send('User updated successfully.');
+    });
+});
+
+//comi 6 eliminar usuario
+app.delete('/users/:id',(request,response)=>{
+    const id = request.params.id;
+    pool.query('DELETE FROM users WHERE id = ?', id, (error, result)=>{
+        if(error) throw error;
+        response.send('User delete.');
+    });
+});
+
+
 }
-);
+module.exports=router; 
